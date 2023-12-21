@@ -2623,10 +2623,6 @@ html[subframe] body {
 </html>
 `
 
-const ONLINE_CONTENTS = `
-<h1>Open this site in chrome browser and turn off your network then reload</h1>
-`
-
 const useFallback = () => {
   return Promise.resolve(new Response(FALLBACK, {
     headers: {
@@ -2635,17 +2631,9 @@ const useFallback = () => {
   }))
 }
 
-const useSuccess = () => {
-  return Promise.resolve(new Response(ONLINE_CONTENTS, {
-    headers: {
-      "Content-Type": "text/html; charset=utf-8",
-    }
-  }))
-}
-
 const onlineOrOfflineContents = (request) => {
   if(navigator.onLine) {
-    return useSuccess()
+    return fetch(request)
   } else {
     return useFallback()
   }
